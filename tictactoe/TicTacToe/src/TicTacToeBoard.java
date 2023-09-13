@@ -4,12 +4,11 @@ import java.util.Scanner;
 public class TicTacToeBoard {
     int n = 3;
     char board[][] = new char[n][n];
+    Scanner in = new Scanner(System.in);
+    Player p1 = new Player();
+    Player p2 = new Player();
 
     public void startBoard() {
-        Player p1 = new Player();
-        Player p2 = new Player();
-        Scanner in = new Scanner(System.in);
-
         System.out.println("Tic Tac Toe game is ready to play!");
 
         System.out.println("Digite o nome do jogador 1: ");
@@ -18,7 +17,7 @@ public class TicTacToeBoard {
         System.out.println("Digite o nome do jogador 2: ");
         p2.player = in.nextLine();
 
-        in.close();
+        // in.close();
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 board[i][j] = '-';
@@ -39,11 +38,64 @@ public class TicTacToeBoard {
         board[row][col] = c;
     }
 
+    public boolean winGame(char c) {
+        boolean win = true;
+        int j = 2;
+        for(int i = 0; i < n; i++) { // check first diagonal
+            if(board[i][i] != c) {
+                win = false;
+            }
+        }
+        if(win) { return win; }
+        win = true; // turn another condition abble
+
+        for(int i = 0; i < n; i++) { //check second diagonal
+            if(board[i][i] != c) {
+                win = false;
+            }
+        }
+        if(win) { return win; }
+        win = true;
+
+
+        for(int i = 0; i < n; i++) { // check horizontal lines
+            for(j = 0; j < n; j++) {
+                if(board[i][j] != c){
+                    win = false;
+                }
+            }
+            if(win) { return win; }
+        }
+        win = true;
+
+        for(int i = 0; i < n; i++) { // check vertical lines
+            for(j = 0; j < n; j++) {
+                if(board[j][i] != c){
+                    win = false;
+                }
+            }
+            if(win) { return win; }
+        }
+
+        return win;
+    }
+
+    public boolean filledBoard() {
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                if(board[i][j] == '-') {
+                    return false;
+                }
+            }
+        }
+        System.out.println("tabuleiro cheio");
+        return true;
+    }
+
     public void launchTTT() {
         boolean gameEnded = false, player1 = true;
         char c;
         int row, col;
-        Scanner in = new Scanner(System.in);
 
         do {
             if (player1 == true) {
@@ -51,13 +103,20 @@ public class TicTacToeBoard {
             } else {
                 c = 'o';
             }
+            // set x or o for each player
 
-            //while(true) {
+            while (true) {
+                if (player1) {
+                    System.out.println(p1.player + "'s turn");
+                } else {
+                    System.out.println(p2.player + "'s turn");
+                }
+
                 System.out.print("Enter a row number: ");
-                row = Integer.parseInt(in.nextLine());
+                row = in.nextInt();
                 System.out.print("Enter a column number: ");
-                col = Integer.parseInt(in.nextLine());
-                in.close();
+                col = in.nextInt();
+                // in.close();
                 if (row < 0 || col < 0 || row >= n || col >= n) {
                     System.out.println("This position is outside the boundaries of the board!x Try again.");
                     // check input range
@@ -67,13 +126,14 @@ public class TicTacToeBoard {
                 } else {
                     break;
                 }
-            //} 
-            
-            drawnBoard(row, col, c);
+            }
 
+            drawnBoard(row, col, c);
             showBoard();
-            player1 = !player1;
-        }while(!gameEnded);
+            gameEnded = filledBoard();
+            gameEnded = winGame(c);
+            player1 = !player1; // player's turn
+        } while (!gameEnded);
     }
 
     TicTacToeBoard() {
