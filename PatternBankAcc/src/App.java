@@ -15,7 +15,8 @@ public class App {
         bank.amountOfAllAcc();
 
         Investment investmentAcc = new Investment(50, "caio", 1020);
-        //investmentAcc.depositMoney(50);
-        //investmentAcc.checkAmount();
+        investmentAcc.depositMoney(50);
+        investmentAcc.checkAmount();
+        investmentAcc.checkInvestment();
     }
 }
