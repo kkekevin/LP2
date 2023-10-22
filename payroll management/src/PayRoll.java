@@ -59,6 +59,7 @@ public class PayRoll {
                     i.setSalary(i.getSalary() * (1 - (i.getInssD() + i.getIrpfD())));
                     System.out.println(i.getSalary());
                     System.out.println("Seller" + i.getName() + "has been paid successfully");
+                    i.setComission(0);
                 }
             } else {
                 System.out.println("there is no seller yet!");
