@@ -65,6 +65,7 @@ public class TicTacToeBoard {
                 }
             }
             if(win) { return win; }
+            win = true;
         }
         win = true;
 
@@ -93,7 +94,7 @@ public class TicTacToeBoard {
     }
 
     public void launchTTT() {
-        boolean gameEnded = false, player1 = true;
+        boolean gameEnded = false, player1 = true, gameEndedF = false;
         char c;
         int row, col;
 
@@ -130,10 +131,10 @@ public class TicTacToeBoard {
 
             drawnBoard(row, col, c);
             showBoard();
-            gameEnded = filledBoard();
+            gameEndedF = filledBoard();
             gameEnded = winGame(c);
             player1 = !player1; // player's turn
-        } while (!gameEnded);
+        } while (!gameEnded || !gameEndedF);
     }
 
     TicTacToeBoard() {
