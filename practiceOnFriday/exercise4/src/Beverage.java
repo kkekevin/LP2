@@ -25,7 +25,7 @@ public abstract class Beverage {
 
     @Override
     public String toString() {
-        return "Beverage [name=" + name + ", quantity=" + quantity + ", price=" + price + "]";
+        return supplier.getName() + " [name=" + name + ", quantity=" + quantity + ", price=" + price + "]";
     }
 
     

@@ -24,18 +24,27 @@ public class Control {
                 Integer typeOfBeverage = Integer.parseInt(vet[4]);
                 Double price = Double.parseDouble(vet[3]);
                 line = reader.readLine();
+                Beverage prod = null;
                 switch (typeOfBeverage) {
                     case 1:
-                        this.drinks.add(new Soda(name, suppliers.get(supplier), quantity, price));
+                        prod = new Soda(name, suppliers.get(supplier), quantity, price);
+                        this.drinks.add(prod);
+                        this.suppliers.get(supplier).addBeverage(prod);
                         break;
                     case 2:
-                        this.drinks.add(new Juice(name, suppliers.get(supplier), quantity, price));
+                        prod = new Juice(name, suppliers.get(supplier), quantity, price);
+                        this.drinks.add(prod);
+                        this.suppliers.get(supplier).addBeverage(prod);
                         break;
                     case 3:
-                        this.drinks.add(new Alcoholic(name, suppliers.get(supplier), quantity, price));
+                        prod = new Alcoholic(name, suppliers.get(supplier), quantity, price);
+                        this.drinks.add(prod);
+                        this.suppliers.get(supplier).addBeverage(prod);
                         break;
                     case 4:
-                        this.drinks.add(new Water(name, suppliers.get(supplier), quantity, price));
+                        prod = new Water(name, suppliers.get(supplier), quantity, price);
+                        this.drinks.add(prod);
+                        this.suppliers.get(supplier).addBeverage(prod);
                         break;
                     default:
                         break;
@@ -46,10 +55,14 @@ public class Control {
         }
     }
     
-    public void writeFile(String name, Integer quantity, Double price){
+    public void writeFile(String name, int supplier, Integer quantity, Double price, int type){
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
-            bw.write("");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path, true))){
+            writer.write(name + ";");
+            writer.write(supplier + ";");
+            writer.write(quantity + ";");
+            writer.write(price + ";");
+            writer.write(type + "\n");
         } catch (Exception e) {
             e.getStackTrace();
         }
@@ -89,7 +102,6 @@ public class Control {
         System.out.println("Informe o fornecedor (nº):");
         int indexSupplier = this.in.nextInt();
         this.in.nextLine();
-        System.out.println(suppliers.get(indexSupplier).getName());
 
         System.out.println("Informe o nome da bebida");
         String name = this.in.nextLine();
@@ -105,34 +117,39 @@ public class Control {
 
         switch (type) {
             case 1:
-                prod = new Soda(name, suppliers.get(indexSupplier), quantity, price);
+                prod = new Soda(name, suppliers.get(indexSupplier - 1), quantity, price);
                 this.drinks.add(prod);
+                writeFile(name, indexSupplier, quantity, price, type);
                 break;
             case 2:
-                prod = new Juice(name, suppliers.get(indexSupplier), quantity, price);
+                prod = new Juice(name, suppliers.get(indexSupplier - 1), quantity, price);
                 this.drinks.add(prod);
+                writeFile(name, indexSupplier, quantity, price, type);                
                 break;
             case 3:
-                prod = new Alcoholic(name, suppliers.get(indexSupplier), quantity, price);
+                prod = new Alcoholic(name, suppliers.get(indexSupplier - 1), quantity, price);
                 this.drinks.add(prod);
+                writeFile(name, indexSupplier, quantity, price, type);
                 break;
             case 4:
-                prod = new Water(name, suppliers.get(indexSupplier), quantity, price);
+                prod = new Water(name, suppliers.get(indexSupplier - 1), quantity, price);
                 this.drinks.add(prod);
+                writeFile(name, indexSupplier, quantity, price, type);
                 break;
         }
     }
 
     public void listOfBeverage () {
-        //readFile();
         for (Beverage i : drinks) {
             System.out.println(i);
         }
     }
 
     public void listOfSuppliers () {
+        int x = 1;
         for (Supplier i : this.suppliers) {
-            System.out.println(i.getName());
+            System.out.println(x + " - " + i.getName());
+            x++;
         }
     }
 
@@ -213,9 +230,6 @@ public class Control {
                     this.listOfSales();
                     break;
             }
-
-
-
         }while (opt != 0);
     }
     Control () {
