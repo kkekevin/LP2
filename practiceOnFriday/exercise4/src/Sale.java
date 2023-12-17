@@ -7,11 +7,9 @@ public class Sale {
         this.quantity = quantity;
     }
 
-    public Beverage getBeverage() {
-        return beverage;
-    }
-
-    public int getQuantity() {
-        return quantity;
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return beverage.getName() + " - " + quantity;
     }
 }

@@ -3,6 +3,7 @@ public abstract class Beverage {
     protected Supplier supplier;
     protected int quantity;
     protected double price;
+    public int type;
     
     public String getName() {
         return name;
@@ -16,11 +17,16 @@ public abstract class Beverage {
         this.quantity = quantity;
     }
 
-    Beverage (String name, Supplier supplier, int quantity, double price) {
+    public double getPrice() {
+        return price;
+    }
+
+    Beverage (String name, Supplier supplier, int quantity, double price, int type) {
         this.name = name;
         this.supplier = supplier;
         this.quantity = quantity;
         this.price = price;
+        this.type = type;
     }
 
     @Override

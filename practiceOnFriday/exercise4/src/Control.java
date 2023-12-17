@@ -10,7 +10,6 @@ public class Control {
     protected ArrayList<Beverage> drinks;
     protected ArrayList<Supplier> suppliers;
     protected Scanner in;
-    //protected BufferedWriter writer = new BufferedWriter(new FileWriter("teste.txt"));
     String path = "/home/kevin/CPufma/LP2/LP2/practiceOnFriday/exercise4/src/teste.txt";
 
     public void readFile() {
@@ -50,6 +49,7 @@ public class Control {
                         break;
                 }
             }
+            reader.close();
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -63,6 +63,40 @@ public class Control {
             writer.write(quantity + ";");
             writer.write(price + ";");
             writer.write(type + "\n");
+            writer.close();
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+    }
+
+    public void updateFile() {
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))){
+           
+            int x = 1;
+            for (Supplier i : suppliers) {
+                for (int j = 0; j < i.beverages.size(); j++) {
+                    writer.write(i.beverages.get(j).getName() + ";");
+                    writer.write(x + ";");
+                    writer.write(i.beverages.get(j).getQuantity() + ";");
+                    writer.write(i.beverages.get(j).getPrice() + ";");
+                    writer.write(i.beverages.get(j).type + "\n");
+                }
+                //tiger;2;48;5.0;3
+                x++;
+            }
+            writer.close();
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+    }
+
+    public void writeSale(String name, int quantity) {
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("sales.txt", true))){
+           writer.write(name + ";");
+           writer.write(quantity + "\n");
+           writer.close();
         } catch (Exception e) {
             e.getStackTrace();
         }
@@ -75,6 +109,7 @@ public class Control {
                 suppliers.add(new Supplier(line));
                 line = reader.readLine();
             }
+            reader.close();
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -83,6 +118,7 @@ public class Control {
     public void writeSFile(String supplier){
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("suppliers.txt", true))){
             writer.write(supplier + "\n");
+            writer.close();
         } catch (Exception e) {
             e.getStackTrace();
         }
@@ -140,8 +176,10 @@ public class Control {
     }
 
     public void listOfBeverage () {
+        int x = 1;
         for (Beverage i : drinks) {
-            System.out.println(i);
+            System.out.println(x + " - " + i);
+            x++;
         }
     }
 
@@ -177,19 +215,21 @@ public class Control {
         int quantity = this.in.nextInt();
         this.in.nextLine();
 
-        if (this.drinks.get(indexBeverage).getQuantity() < quantity) {
+        if (this.drinks.get(indexBeverage - 1).getQuantity() < quantity) {
             System.out.println("estoque insuficiente");
             return;
         }
 
-        sales.add(new Sale(drinks.get(indexBeverage), quantity)); //set a sale
-        drinks.get(indexBeverage).setQuantity(
-            drinks.get(indexBeverage).getQuantity() - quantity); //take away quantity
+        sales.add(new Sale(drinks.get(indexBeverage - 1), quantity)); //set a sale
+        drinks.get(indexBeverage - 1).setQuantity(
+            drinks.get(indexBeverage - 1).getQuantity() - quantity); //take away quantity
+        updateFile(); //update quantity of beverages
+        writeSale(drinks.get(indexBeverage - 1).getName(), quantity); //set this sale in file sales.txt
     }
 
     public void listOfSales () {
         for (Sale i : sales) {
-            System.out.printf("%c %f",i.getBeverage(), i.getQuantity());
+            System.out.println(i);
         }
     }
 

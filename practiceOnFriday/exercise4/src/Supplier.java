@@ -10,6 +10,7 @@ public class Supplier {
 
     Supplier (String name) {
         this.name = name;
+        beverages = new ArrayList<>();
     }
 
     public String getName() {
