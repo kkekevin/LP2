@@ -1,0 +1,11 @@
+FIXA;2023;2;computacao;disciplina;50;24t12
+FIXA;2023;2;24t12;disciplina;50;computacao
+FIXA;2023;2;computacao;disciplina;50;24t12
+FIXA;2023;2;computacao;disciplina;50;24t12
+FIXA;2023;2;24t45;disciplina;200;computacao
+FIXA;2023;2;24t45;disciplina;200;computacao
+FIXA;2023;2;24t12;disciplina;50;computacao
+FIXA;2023;2;24t12;disciplina;50;cp
+FIXA;2023;2;24t12;disciplina;50;computacao
+FIXA;2023;2;24t12;disciplina;50;computacao
+FIXA;2023;2;24t12;disciplina;50;cp

@@ -1,0 +1,3 @@
+banco de dados;24t45;computacao
+lp2;24t12;computacao
+pds;24t12;cp
