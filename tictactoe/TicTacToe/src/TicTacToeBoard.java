@@ -41,40 +41,45 @@ public class TicTacToeBoard {
     public boolean winGame(char c) {
         boolean win = true;
         int j = 2;
-        for(int i = 0; i < n; i++) { // check first diagonal
-            if(board[i][i] != c) {
+        for (int i = 0; i < n; i++) { // check first diagonal
+            if (board[i][i] != c) {
                 win = false;
             }
         }
-        if(win) { return win; }
+        if (win) {
+            return win;
+        }
         win = true; // turn another condition abble
 
-        for(int i = 0; i < n; i++) { //check second diagonal
-            if(board[i][i] != c) {
+        for (int i = 0; i < n; i++) { // check second diagonal
+            if (board[i][i] != c) {
                 win = false;
             }
         }
-        if(win) { return win; }
+        if (win) {
+            return win;
+        }
         win = true;
 
-
-        for(int i = 0; i < n; i++) { // check horizontal lines
-            for(j = 0; j < n; j++) {
-                if(board[i][j] != c){
+        for (int i = 0; i < n; i++) { // check horizontal lines
+            for (j = 0; j < n; j++) {
+                if (board[i][j] != c) {
                     win = false;
                 }
             }
-            if(win) { return win; }
+            if (win) {
+                return win;
+            }
             win = true;
         }
         win = true;
 
-        for(int i = 0; i < n; i++) { // check vertical lines
-            for(j = 0; j < n; j++) {
-                if(board[j][i] != c)
-                    win = false;                
+        for (int i = 0; i < n; i++) { // check vertical lines
+            for (j = 0; j < n; j++) {
+                if (board[j][i] != c)
+                    win = false;
             }
-            if(win)
+            if (win)
                 return win;
         }
 
@@ -82,9 +87,9 @@ public class TicTacToeBoard {
     }
 
     public boolean filledBoard() {
-        for(int i = 0; i < n; i++) {
-            for(int j = 0; j < n; j++) {
-                if(board[i][j] == '-') {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == '-') {
                     return false;
                 }
             }
@@ -132,7 +137,14 @@ public class TicTacToeBoard {
             drawnBoard(row, col, c);
             showBoard();
             gameEndedF = filledBoard();
-            gameEnded = winGame(c);
+            gameEnded = winGame(c);            
+            if (gameEnded) {
+                if (player1) { //which player wins
+                    System.out.println(p1.player + " win");
+                } else {
+                    System.out.println(p2.player + " win");
+                }
+            }
             player1 = !player1; // player's turn
         } while (!gameEnded && !gameEndedF);
     }
