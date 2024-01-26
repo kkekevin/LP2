@@ -71,11 +71,11 @@ public class TicTacToeBoard {
 
         for(int i = 0; i < n; i++) { // check vertical lines
             for(j = 0; j < n; j++) {
-                if(board[j][i] != c){
-                    win = false;
-                }
+                if(board[j][i] != c)
+                    win = false;                
             }
-            if(win) { return win; }
+            if(win)
+                return win;
         }
 
         return win;
@@ -134,7 +134,7 @@ public class TicTacToeBoard {
             gameEndedF = filledBoard();
             gameEnded = winGame(c);
             player1 = !player1; // player's turn
-        } while (!gameEnded || !gameEndedF);
+        } while (!gameEnded && !gameEndedF);
     }
 
     TicTacToeBoard() {
